@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hello Word - 您的个人单词学习助手</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            position: relative;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #555;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .download-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #9b59b6, #3498db);
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+        
+        .download-btn:hover:before {
+            left: 0;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .feature {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s forwards;
+        }
+        
+        .feature:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .feature:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .feature:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        .feature img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+        }
+        
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .screenshots {
+            margin: 60px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .screenshots h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .screenshots h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+        }
+        
+        .screenshot-container {
+            position: relative;
+            max-width: 300px;
+            height: 600px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 36px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .carousel-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+        }
+        
+        .carousel-item.active {
+            opacity: 1;
+        }
+        
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-control:hover {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .carousel-control.prev {
+            left: -20px;
+        }
+        
+        .carousel-control.next {
+            right: -20px;
+        }
+        
+        .carousel-indicators {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+        
+        .carousel-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-indicator.active {
+            background: white;
+            transform: scale(1.2);
+        }
+        
+        .phone-frame {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            background: url('static/phone-frame.png') no-repeat center center;
+            background-size: contain;
+        }
+        
+        .about {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            padding: 50px;
+            margin: 60px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .about h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+        
+        .about p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #555;
+            font-size: 1rem;
+        }
+        
+        .version {
+            display: inline-block;
+            background: rgba(52, 152, 219, 0.1);
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: #3498db;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 30px 0;
+            }
+            
+            .logo {
+                width: 90px;
+                height: 90px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
+            .feature {
+                padding: 20px;
+            }
+            
+            .about {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <img src="static/logo.png" alt="Hello Word Logo" class="logo">
+            </div>
+            <h1>Hello Word</h1>
+            <p class="tagline">您的专属个人单词学习助手，让单词记忆更简单高效</p>
+            <a href="https://helloword.novashen.top/apk" class="download-btn">立即下载</a><br/>
+            <div class="version">当前版本: v1.2.7</div>
+        </header>
+        
+        <div class="features">
+            <div class="feature">
+                <img src="static/learn-icon.png" alt="学习功能">
+                <h3>智能单词学习</h3>
+                <p>基于科学记忆曲线，智能安排单词学习进度，让记忆更加高效。通过丰富的例句和场景，帮助您深入理解单词用法。</p>
+            </div>
+            
+            <div class="feature">
+                <img src="static/review-icon.png" alt="复习功能">
+                <h3>个性化复习系统</h3>
+                <p>根据您的学习情况智能安排复习计划，针对薄弱环节加强训练，确保单词真正掌握，不再遗忘。</p>
+            </div>
+            
+            <div class="feature">
+                <img src="static/stats-icon.png" alt="数据统计">
+                <h3>学习数据分析</h3>
+                <p>详细记录您的学习数据，直观展示学习进度和成果，通过数据可视化激励您持续学习，养成良好习惯。</p>
+            </div>
+        </div>
+        
+        <div class="screenshots">
+            <h2>应用界面预览</h2>
+            <div class="screenshot-container">
+                <div class="carousel">
+                    <div class="carousel-item active">
+                        <img src="static/1.jpg" alt="应用预览1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="static/2.jpg" alt="应用预览2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="static/3.jpg" alt="应用预览3">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="static/4.jpg" alt="应用预览4">
+                    </div>
+                    <div class="carousel-control prev">❮</div>
+                    <div class="carousel-control next">❯</div>
+                    <div class="carousel-indicators">
+                        <div class="carousel-indicator active"></div>
+                        <div class="carousel-indicator"></div>
+                        <div class="carousel-indicator"></div>
+                        <div class="carousel-indicator"></div>
+                    </div>
+                </div>
+                <div class="phone-frame"></div>
+            </div>
+        </div>
+        
+        <div class="about">
+            <h2>关于 Hello Word</h2>
+            <p>Hello Word 是一款专为中国学生和英语学习者打造的单词学习软件。我们的目标是通过科学的方法和愉悦的体验，帮助用户高效地掌握英语单词。</p>
+            <p>软件特色：</p>
+            <ul>
+                <li>智能学习计划：根据个人水平和目标定制专属学习计划</li>
+                <li>科学记忆曲线：基于艾宾浩斯记忆曲线优化复习时间</li>
+                <li>丰富词库资源：包含各类考试和日常使用的常用词汇</li>
+                <li>多元学习方式：视觉记忆、听力训练、拼写挑战多种方式结合</li>
+                <li>离线学习支持：无需网络也能随时随地学习</li>
+                <li>数据同步备份：多设备之间安全同步您的学习进度</li>
+            </ul>
+        </div>
+        
+        <footer>
+            <p>Copyright © 2025 Hello Word. 保留所有权利。</p>
+        </footer>
+    </div>
+    
+    <script>
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const features = document.querySelectorAll('.feature');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.2 });
+            
+            features.forEach(feature => {
+                observer.observe(feature);
+            });
+            
+            // 下载按钮点击效果
+            const downloadBtn = document.querySelector('.download-btn');
+            downloadBtn.addEventListener('click', function(e) {
+                this.innerHTML = '正在下载...';
+                setTimeout(() => {
+                    this.innerHTML = '立即下载';
+                }, 2000);
+            });
+            
+            // 轮播图实现
+            const carousel = document.querySelector('.carousel');
+            const items = carousel.querySelectorAll('.carousel-item');
+            const prevBtn = carousel.querySelector('.carousel-control.prev');
+            const nextBtn = carousel.querySelector('.carousel-control.next');
+            const indicators = carousel.querySelectorAll('.carousel-indicator');
+            let currentIndex = 0;
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            // 设置当前轮播项
+            function setCurrentItem(index) {
+                // 处理索引范围
+                if (index < 0) {
+                    index = items.length - 1;
+                } else if (index >= items.length) {
+                    index = 0;
+                }
+                
+                // 更新当前索引
+                currentIndex = index;
+                
+                // 更新轮播项状态
+                items.forEach((item, i) => {
+                    item.classList.toggle('active', i === currentIndex);
+                });
+                
+                // 更新指示器状态
+                indicators.forEach((indicator, i) => {
+                    indicator.classList.toggle('active', i === currentIndex);
+                });
+            }
+            
+            // 自动轮播
+            let slideInterval = setInterval(() => {
+                setCurrentItem(currentIndex + 1);
+            }, 3000);
+            
+            // 重置轮播计时器
+            function resetInterval() {
+                clearInterval(slideInterval);
+                slideInterval = setInterval(() => {
+                    setCurrentItem(currentIndex + 1);
+                }, 3000);
+            }
+            
+            // 按钮点击事件
+            prevBtn.addEventListener('click', () => {
+                setCurrentItem(currentIndex - 1);
+                resetInterval();
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                setCurrentItem(currentIndex + 1);
+                resetInterval();
+            });
+            
+            // 指示器点击事件
+            indicators.forEach((indicator, i) => {
+                indicator.addEventListener('click', () => {
+                    setCurrentItem(i);
+                    resetInterval();
+                });
+            });
+            
+            // 触摸滑动事件
+            carousel.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            carousel.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+            
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    // 左滑，显示下一张
+                    setCurrentItem(currentIndex + 1);
+                    resetInterval();
+                } else if (touchEndX > touchStartX + swipeThreshold) {
+                    // 右滑，显示上一张
+                    setCurrentItem(currentIndex - 1);
+                    resetInterval();
+                }
+            }
+            
+            // 鼠标滑动事件
+            let isMouseDown = false;
+            let mouseStartX = 0;
+            let mouseEndX = 0;
+            
+            carousel.addEventListener('mousedown', (e) => {
+                isMouseDown = true;
+                mouseStartX = e.clientX;
+                carousel.style.cursor = 'grabbing';
+            });
+            
+            carousel.addEventListener('mousemove', (e) => {
+                if (!isMouseDown) return;
+            });
+            
+            carousel.addEventListener('mouseup', (e) => {
+                if (!isMouseDown) return;
+                isMouseDown = false;
+                mouseEndX = e.clientX;
+                carousel.style.cursor = 'grab';
+                
+                const moveThreshold = 50;
+                if (mouseEndX < mouseStartX - moveThreshold) {
+                    // 左滑，显示下一张
+                    setCurrentItem(currentIndex + 1);
+                } else if (mouseEndX > mouseStartX + moveThreshold) {
+                    // 右滑，显示上一张
+                    setCurrentItem(currentIndex - 1);
+                }
+                resetInterval();
+            });
+            
+            carousel.addEventListener('mouseleave', () => {
+                if (isMouseDown) {
+                    isMouseDown = false;
+                    carousel.style.cursor = 'grab';
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

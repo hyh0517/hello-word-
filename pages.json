@@ -1,0 +1,103 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/begin/login",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		},
+		{
+		    "path" : "pages/begin/register",
+		    "style" : 
+		    {
+		        "navigationBarTitleText" : ""
+		    }
+		},
+		{
+		    "path" : "pages/begin/forgetPassword",
+		    "style" : 
+		    {
+		        "navigationBarTitleText" : ""
+		    }
+		},
+		{
+		    "path" : "pages/home/home",
+		    "style" : 
+		    {
+		        "tab" : ""
+		    }
+		},
+		{
+		    "path" : "pages/word/learn",
+		    "style" : 
+		    {
+		        "navigationBarTitleText" : ""
+		    }
+		},
+		{
+		    "path" : "pages/word/reviews",
+		    "style" : 
+		    {
+		        "navigationBarTitleText" : ""
+		    }
+		},
+		{
+		    "path" : "pages/word/reviewszh",
+		    "style" : 
+		    {
+		        "navigationBarTitleText" : ""
+		    }
+		},
+		{
+		    "path" : "pages/home/user",
+		    "style" : 
+		    {
+		        "navigationBarTitleText" : ""
+		    }
+		},
+		{
+		    "path" : "pages/home/search",
+		    "style" : 
+		    {
+		        "navigationBarTitleText" : ""
+		    }
+		},
+		{
+		    "path" : "pages/word/word",
+		    "style" : 
+		    {
+		        "navigationBarTitleText" : ""
+		    }
+		},
+		{
+		    "path" : "pages/word/completed",
+		    "style" : 
+		    {
+		        "tab" : "2"
+		    }
+		}
+	,{
+    "path": "uni_modules/rt-uni-update/components/rt-uni-update/rt-uni-update",
+    "style": {
+        "app-plus": {
+            "animationDuration": 200,
+            "animationType": "fade-in",
+            "background": "transparent",
+            "backgroundColorTop": "transparent",
+            "popGesture": "none",
+            "scrollIndicator": false,
+            "titleNView": false
+        },
+        "disableScroll": true
+    }
+}
+],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"navigationStyle": "custom"
+	},
+	"uniIdRouter": {}
+}
